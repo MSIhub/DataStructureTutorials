@@ -17,6 +17,7 @@ Revision and References for data structure and algorithms
     - Formula for nD array
  - Array abstract datatype [ADT]
     - Class of array datatype
+    - Template class implementation
     - Basic functionalities like insert, delete, sort, etc.
     - Get, set, avg, etc.
     - Set Operations such as Union, Intersection, Difference
