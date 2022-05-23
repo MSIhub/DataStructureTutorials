@@ -4,65 +4,65 @@
 
 #include <iostream>
 
-struct Array
+template<class T>
+class Array
 {
-	int* A;
+private:
+	T* A;
 	int size;
 	int length;
+
+	void swap(T* x, T* y);
+public:
+	Array()
+	{
+		size = 10;
+		length = 0; 
+		A = new T[size];
+	}
+	Array(int sz)
+	{
+		size = sz;
+		length = 0; 
+		A = new T[size];
+	}
+	~Array()
+	{
+		delete[] A;
+	}
+
+	void Display();
+	void Append(T x);
+	void InsertAt(int index, T x);
+	T DeleteAt(int index);
+	T LinearSearch(T key);
+	T LinearSearch_Transposition(T key);
+	T LinearSearch_MoveToHead(T key);
+	T BinarySearch(T key);
+	//int BinarSearchRecursive(int key, int left_idx, int right_idx);
+	T Get(int index);
+	void Set( int index, T val);
+	T Max();
+	T Min();
+	T Sum();
+	//int SumRecursive(int n);
+	T Average();
+	void Reverse();
+	void Reverse2();
+	void LeftShift();
+	void RightShift();
+	void LeftRotate();
+	void RightRotate();
+	void InsertSort(T x);
+	bool isSorted();
+	void RearrangePositiveNegative();
+	Array* Merge(Array arr2);
+	Array* Union(Array arr2);
+	Array* Intersection(Array arr2);
+	Array* Difference(Array arr2);
 };
-
-
-#endif
 
 void ArrayADT_test();
 
-void Display(Array arr);
-void Append(Array* arr, int x);
-void InsertAt(Array* arr, int index, int x);
-int DeleteAt(Array* arr, int index);
-void swap(int* x, int* y);
-int LinearSearch(Array* arr, int key);
-int LinearSearch_Transposition(Array* arr, int key);
-int LinearSearch_MoveToHead(Array* arr, int key);
-int BinarySearch(Array* arr, int key);
-int BinarSearchRecursive(Array* arr, int key, int left_idx, int right_idx);
+#endif
 
-int Get(Array* arr, int index);
-
-void Set(Array* arr, int index, int val);
-
-int Max(Array* arr);
-
-int Min(Array* arr);
-
-int Sum(Array* arr);
-
-int SumRecursive(Array* arr, int n);
-
-int Average(Array* arr);
-
-void Reverse(Array* arr);
-
-void Reverse2(Array* arr);
-
-void LeftShift(Array* arr);
-
-void RightShift(Array* arr);
-
-void LeftRotate(Array* arr);
-
-void RightRotate(Array* arr);
-
-void InsertSort(Array* arr, int x);
-
-int isSorted(Array arr);
-
-void RearrangePositiveNegative(Array* arr);
-
-Array* Merge(Array* arr1, Array* arr2);
-
-Array* Union(Array* arr1, Array* arr2);
-
-Array* Intersection(Array* arr1, Array* arr2);
-
-Array* Difference(Array* arr1, Array* arr2);
