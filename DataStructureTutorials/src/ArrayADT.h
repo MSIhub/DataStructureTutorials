@@ -60,6 +60,14 @@ public:
 	Array* Union(Array arr2);
 	Array* Intersection(Array arr2);
 	Array* Difference(Array arr2);
+	Array<T>* FindMissingElementSorted();
+	Array<T>* FindMissingElementInt();
+	Array<T>* FindDuplicateElementSorted();
+	Array<T>* FindDuplicateElementInt();
+	void FindPairForSum(T Sum);
+	void FindPairForSumHash(T Sum);
+	void FindPairForSumSorted(T Sum);
+
 };
 
 void ArrayADT_test();

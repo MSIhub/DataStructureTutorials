@@ -416,6 +416,151 @@ Array<T>* Array<T>::Difference(Array<T> arr2)
 	return arr3;
 }
 
+template<class T>
+Array<T>* Array<T>::FindMissingElementSorted()
+{
+	Array<T>* arr3 = new Array<T>(length*3);
+	int k = 0;
+	T difference = A[0] - 0;
+	for (int i = 0; i < length; i++)
+	{
+		T newDifference = A[i] - i;
+		if (newDifference != difference)
+		{
+			while (difference < newDifference)
+			{
+				arr3->A[k++] = i + difference;
+				difference++;
+			}
+		}
+	}
+	arr3->length = k;
+	return arr3;
+}
+
+
+
+template<class T>
+Array<T>* Array<T>::FindMissingElementInt()
+{
+	Array<T>* arr3 = new Array<T>(length * 3);
+	int k = 0;
+	int low = Min(); 
+	int high = Max(); 
+	int* hash = new int[high+1]{0};//hash table 
+
+	for(int i =0; i< length; i++)
+		*(hash + A[i]) += 1;
+
+	for (int i = Min(); i <= Max(); i++)
+	{
+		if (hash[i] == 0)
+			arr3->A[k++] = i;
+	}
+	arr3->length = k;
+	return arr3;
+}
+
+
+
+template<class T>
+Array<T>* Array<T>::FindDuplicateElementSorted()//O(N) time
+{
+	Array<T>* arr3 = new Array<T>(length);
+	int k = 0, j=0;
+
+	for (int i = 0; i < length-1; i++)
+	{
+		if (A[i] == A[i + 1])
+		{
+			j++;
+			while (A[j] == A[i]) j++;
+			printf("%d is appearing %d times\n", A[i], j - i);
+			arr3->A[k++] = A[i];
+			i = j - 1;
+		}
+	}
+	arr3->length = k;
+	return arr3;
+}
+
+template<class T>
+Array<T>* Array<T>::FindDuplicateElementInt()//O(N) time
+{
+	Array<T>* arr3 = new Array<T>(length * 3);
+	int k = 0;
+	int low = Min();
+	int high = Max();
+	int* hash = new int[high + 1]{ 0 };//hash table 
+
+	for (int i = 0; i < length; i++)
+		*(hash + A[i]) += 1;
+
+	for (int i = Min(); i <= Max(); i++)
+	{
+		if (hash[i] > 1)
+		{
+			arr3->A[k++] = i;
+			printf("%d is appearing %d times\n", i, hash[i]);
+		}
+	}
+	arr3->length = k;
+	return arr3;
+}
+
+template<class T>
+void Array<T>::FindPairForSum(T Sum)//O(N^2)
+{
+	for (int i = 0; i < length-1; i++)
+	{
+		for (int j = i + 1; j < length; j++)
+		{
+			if (A[i] + A[j] == Sum)
+				std::cout << A[i] << " , " << A[j] << "\n";
+		}
+	}
+}
+
+
+template<class T>
+void Array<T>::FindPairForSumHash(T Sum)//O(N) time 
+{
+	int high = Max();
+	int* hash = new int[high+1] {0};
+	for (int i = 0; i < length; i++)
+	{
+		if ((Sum - A[i]) > 0)//To avoid out of bound memory assess
+		{
+			if (*(hash + (Sum - A[i])) != 0)
+				std::cout << A[i] << " , " << Sum - A[i] << "\n";
+
+			*(hash + A[i]) += 1;
+		}
+		
+	}
+}
+
+template<class T>
+void Array<T>::FindPairForSumSorted(T Sum)//O(N)
+{
+	int left_idx = 0, right_idx = length-1;
+	while (left_idx < right_idx)
+	{
+		if (A[left_idx] + A[right_idx] == Sum)
+		{
+			std::cout << "(" << A[left_idx] << " , " << A[right_idx] << ")\n";
+			left_idx++;
+			right_idx--;
+		}
+		else if (A[left_idx] + A[right_idx] < Sum)
+			left_idx++;
+		else
+			right_idx--;
+	}
+}
+
+
+
 #pragma region Menu Driven Test
 void ArrayADT_test()
 {
@@ -423,11 +568,13 @@ void ArrayADT_test()
 	int ch, sz;
 	int x;
 	int index;
+	int sum;
 	
 
 	printf("Enter Size of the array: ");
 	std::cin >> sz;
 	Array<int>* arr1 = new Array<int>(sz);
+	Array<int>* arr3 = new Array<int>(sz);
 
 	do
 	{
@@ -437,7 +584,9 @@ void ArrayADT_test()
 		printf("3. Search\n");
 		printf("4. Sum\n");
 		printf("5. Display\n");
-		printf("6. Exit\n");
+		printf("6. FindDuplicateElement\n");
+		printf("7. FindPairForSumSorted\n");
+		printf("8. Exit\n");
 
 		printf("enter your choice: ");
 		std::cin >> ch;
@@ -468,10 +617,19 @@ void ArrayADT_test()
 			break;
 		case 5:
 			arr1->Display();
+			break;
+		case 6:
+			arr3 = arr1->FindDuplicateElementInt();
+			arr3->Display();
+			break;
+		case 7:
+			printf("Enter the Sum: ");
+			std::cin >> sum;
+			arr1->FindPairForSumSorted(sum);
 		}
 
 
-	} while (ch < 6);
+	} while (ch < 8);
 
 }
 #pragma endregion
