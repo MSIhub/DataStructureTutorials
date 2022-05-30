@@ -5,3 +5,4 @@
 #include "LinkedList.h"
 #include "Array.h"
 #include "ArrayADT.h"
+#include "String.h"

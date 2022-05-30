@@ -164,6 +164,7 @@
     <ClCompile Include="src\LinkedList.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Recursion.cpp" />
+    <ClCompile Include="src\String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Array.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="src\LinkedList.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\Recursion.h" />
+    <ClInclude Include="src\String.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

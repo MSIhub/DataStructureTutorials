@@ -31,7 +31,8 @@ int main()
 	//declartionTypes();
 	//TwoDArrayDemo();
 
-	ArrayADT_test();
-
+	//ArrayADT_test();
+	
+	StringTest();
 	return 0;
 }
