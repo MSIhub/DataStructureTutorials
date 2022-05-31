@@ -33,6 +33,8 @@ int main()
 
 	//ArrayADT_test();
 	
-	StringTest();
+	//StringTest();
+
+	MatricesTest();
 	return 0;
 }

@@ -163,6 +163,7 @@
     <ClCompile Include="src\ArrayADT.cpp" />
     <ClCompile Include="src\LinkedList.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Matrices.cpp" />
     <ClCompile Include="src\Recursion.cpp" />
     <ClCompile Include="src\String.cpp" />
   </ItemGroup>
@@ -171,6 +172,7 @@
     <ClInclude Include="src\ArrayADT.h" />
     <ClInclude Include="src\LinkedList.h" />
     <ClInclude Include="src\main.h" />
+    <ClInclude Include="src\Matrices.h" />
     <ClInclude Include="src\Recursion.h" />
     <ClInclude Include="src\String.h" />
   </ItemGroup>
