@@ -35,6 +35,11 @@ int main()
 	
 	//StringTest();
 
-	MatricesTest();
+	//MatricesTest();
+	//sparseMatrixTest();
+	//polyTest();
+
+	linkedListtest2();
+	//QuadTreeTest();
 	return 0;
 }

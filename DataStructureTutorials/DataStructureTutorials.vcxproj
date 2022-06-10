@@ -161,19 +161,27 @@
   <ItemGroup>
     <ClCompile Include="src\Array.cpp" />
     <ClCompile Include="src\ArrayADT.cpp" />
+    <ClCompile Include="src\BinaryTree.cpp" />
     <ClCompile Include="src\LinkedList.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Matrices.cpp" />
+    <ClCompile Include="src\PolynomialRepresentation.cpp" />
+    <ClCompile Include="src\QuadTree.cpp" />
     <ClCompile Include="src\Recursion.cpp" />
+    <ClCompile Include="src\SparseMatrix.cpp" />
     <ClCompile Include="src\String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Array.h" />
     <ClInclude Include="src\ArrayADT.h" />
+    <ClInclude Include="src\BinaryTree.h" />
     <ClInclude Include="src\LinkedList.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\Matrices.h" />
+    <ClInclude Include="src\PolynomialRepresentation.h" />
+    <ClInclude Include="src\QuadTree.h" />
     <ClInclude Include="src\Recursion.h" />
+    <ClInclude Include="src\SparseMatrix.h" />
     <ClInclude Include="src\String.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

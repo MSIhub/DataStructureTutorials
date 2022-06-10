@@ -7,3 +7,6 @@
 #include "ArrayADT.h"
 #include "String.h"
 #include "Matrices.h"
+#include "SparseMatrix.h"
+#include "PolynomialRepresentation.h"
+#include "Quadtree.h"
