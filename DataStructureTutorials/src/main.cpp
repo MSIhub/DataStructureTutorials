@@ -39,7 +39,7 @@ int main()
 	//sparseMatrixTest();
 	//polyTest();
 
-	linkedListtest2();
+	linkedListtest();
 	//QuadTreeTest();
 	return 0;
 }

@@ -20,48 +20,53 @@ public:
 	//Mutators (setters)
 	void setNext(Node* next) { this->next = next; }
 	void setValue(int value) { this->value = value; }
-
 };
 
-static Node* head = nullptr;
-static Node* tail = nullptr;
-static Node* second = nullptr;
-static Node* third = nullptr;
+class LinkedList
+{
+private:
+	Node* head;
+	Node* tail;
+public:
+	LinkedList()
+	{
+		this->head = nullptr; 
+		this->tail = nullptr;
+	}
+	LinkedList(int* A, int n);
 
-Node* createLinkedList(int* A, int n);
+	~LinkedList() 
+	{
+		Node* p = this->head;
+		while (this->head)
+		{
+			this->head = this->head->getNext();
+			delete p;
+			p = this->head;
+		}
+		delete this->tail;
+	};
 
-bool isLoop();
+	Node* getHead() { return this->head; }
+	Node* getTail() { return this->tail; }
 
-void printLinkedList(Node* node);
-
-int count(Node* node);
-
-int addLinkedList(Node* node);
-
-int addLinkedListRecursion(Node* node);
-
-Node* reverseLinkedList(Node* node);
-
-int MaximumElementLinkedlist(Node* p);
-
-void insertAt(int iVal, int iIdx);
-
-void InsertLast(int x);
-
-Node* searchLinear(Node* p, int key);
-
-void insertSortLinkedList(int x);
-
-int deleteAt(int dIdx);
-
-bool isSorted();
-
-void removeDuplicateSorted();
-
-void reverseSlidingNode();
-
-void reverseSlidingNodeRecursive();
-
+	void display();
+	int length();
+	int sum();
+	int max();	
+	int min();	
+	bool isSorted();
+	bool isLoop();
+	void insertAt(int index, int x);
+	void InsertLast(int x);
+	int deleteAt(int index);
+	void reverse();
+	Node* searchLinear(int key);
+	void insertSorted(int x);
+	void removeDuplicateSorted();
+	void concat(LinkedList * n2);
+	void mergeSorted(LinkedList* n2);
+	Node * reverseRecursion(Node* node);
+};
 void linkedListtest();
-void linkedListtest2();
 #endif // 

@@ -1,40 +1,26 @@
 #include "LinkedList.h"
 
-Node* createLinkedList(int * A, int n)
+LinkedList::LinkedList(int * A, int n)
 {
 	int i; 
 	Node* tmp;
-	head = (Node*)malloc(sizeof(Node));
-	head->setValue(A[0]);
-	head->setNext(nullptr);
-	tail = head;
+	this->head = (Node*)malloc(sizeof(Node));
+	this->head->setValue(A[0]);
+	this->head->setNext(nullptr);
+	this->tail = head;
 
 	for (i = 1; i < n; i++)
 	{
 		tmp = new Node(A[i]);
 		tmp->setNext(nullptr);
-		tail->setNext(tmp);
-		tail = tmp;
+		this->tail->setNext(tmp);
+		this->tail = tmp;
 	}
-	return head;
 }
 
-bool isLoop()
+void LinkedList::display()
 {
-	Node* p, * q;
-	p = q = head;
-	do
-	{
-		p= p->getNext();
-		q = q->getNext();
-		q = q ? q->getNext() : q;
-	} while (p && q && p != q);
-	return (p = q) ? true : false;
-}
-
-void printLinkedList(Node* node)
-{
-	Node* tmp = node;
+	Node* tmp = this->head;
 	while (tmp != nullptr)
 	{
 		std::cout << tmp->getValue() << "->";
@@ -43,43 +29,21 @@ void printLinkedList(Node* node)
 	std::cout << std::endl;
 }
 
-
-void printLinkedListRecursive(Node* node)
+int LinkedList::length()//O(n) Time, O(1) space
 {
-	if (node != NULL)
-	{
-		std::cout << node->getValue() << "->";
-		printLinkedListRecursive(node->getNext());
-	}
-}
-
-int count(Node* node)//O(n) Time, O(1) space
-{
+	Node* tmp = this->head;
 	int ct = 0;
-	while (node != nullptr)
+	while (tmp != nullptr)
 	{
 		ct++;
-		node = node->getNext();
+		tmp = tmp->getNext();
 	}
 	return ct;
 }
 
-
-
-int countRecursive(Node* node)//O(n) Time, O(n) space (call stack)
+int LinkedList::sum()
 {
-	int x = 0;
-	if (node)
-	{
-		x = count(node->getNext());
-		return x + 1;
-	}
-	else
-		return x;
-}
-
-int addLinkedList(Node* node)
-{
+	Node* node = this->head;
 	int sum = 0;
 	while (node)
 	{
@@ -89,30 +53,9 @@ int addLinkedList(Node* node)
 	return sum;
 }
 
-int addLinkedListRecursion(Node* node)
+int LinkedList::max()
 {
-	int sum = 0;
-	if (node)
-	{
-		sum = addLinkedListRecursion(node->getNext());
-		return  sum + node->getValue();
-	}
-	else
-		return sum;
-}
-
-Node* reverseLinkedList(Node* node)
-{
-	if (node == nullptr || node->getNext() == nullptr)
-		return node;
-	Node* p = reverseLinkedList(node->getNext());
-	node->getNext()->setNext(node);
-	node->setNext(nullptr);
-	return p;	
-}
-
-int MaximumElementLinkedlist(Node* p)
-{
+	Node* p = this->head;
 	int max = INT_MIN;
 	while (p)
 	{
@@ -123,21 +66,51 @@ int MaximumElementLinkedlist(Node* p)
 	return max;
 }
 
-int MaximumElementLinkedlistRecursive(Node* p) 
+int LinkedList::min()
 {
-	int x = 0;
-	if (p == nullptr)
-		return INT_MIN;
-	x = MaximumElementLinkedlistRecursive(p->getNext());
-	return (x > p->getValue()) ? x : p->getValue();
+	Node* p = this->head;
+	int min = INT_MAX;
+	while (p)
+	{
+		if (p->getValue() < min)
+			min = p->getValue();
+		p = p->getNext();
+	}
+	return min;
 }
 
+bool LinkedList::isSorted()
+{
+	Node* p = this->head;
+	int prevVal = INT_MIN;
+	while (p != nullptr)
+	{
+		if (p->getValue() < prevVal)
+			return false;
+		prevVal = p->getValue();
+		p = p->getNext();
+	}
+	return true;
+}
 
-void insertAt(int iVal, int iIdx)
+bool LinkedList::isLoop()
+{
+	Node* p, * q;
+	p = q = this->head;
+	do
+	{
+		p= p->getNext();
+		q = q->getNext();
+		q = q ? q->getNext() : q;
+	} while (p && q && p != q);
+	return (p = q) ? true : false;
+}
+
+void LinkedList::insertAt(int iVal, int iIdx)
 {
 	Node* iNode = new Node(iVal);
-	Node* p = head;
-	if (iIdx < 0||iIdx > count(p))
+	Node* p = this->head;
+	if (iIdx < 0 || iIdx > this->length())
 		return;
 
 	if (iIdx == 0)//insert at head
@@ -147,30 +120,78 @@ void insertAt(int iVal, int iIdx)
 		return;
 	}
 	int itr = 1;
-	while (p && itr < iIdx-1)
+	while (p && itr < iIdx - 1)
 	{
 		p = p->getNext();
 		itr++;
 	}
-	
+
 	iNode->setNext(p->getNext());
 	p->setNext(iNode);
 }
 
-void InsertLast(int x)
+void LinkedList::InsertLast(int x)
 {
 	Node* iNode = new Node(x);
-	if (head == nullptr)
-		head = tail = iNode;
+	if (this->head == nullptr)
+		this->head = this->tail = iNode;
 	else
 	{
-		tail->setNext(iNode);
-		tail = iNode;
+		this->tail->setNext(iNode);
+		this->tail = iNode;
 	}
 }
 
-Node* searchLinear(Node * p, int key)
+int LinkedList::deleteAt(int dIdx)
+{
+	Node* p, * q;
+	int retVal = -1, idx = 0;
+
+	if (dIdx == 1)
+	{
+		retVal = this->head->getValue();
+		p = this->head;
+		this->head = this->head->getNext();
+		delete p;
+	}
+	else
+	{
+		p = this->head;
+		q = nullptr;
+		for (idx = 0; idx < dIdx - 1 && p; idx++)
+		{
+			q = p;
+			p = p->getNext();
+		}
+		if (p)
+		{
+			q->setNext(p->getNext());
+			retVal = p->getValue();
+			delete p;
+		}
+	}
+	return retVal;
+}
+
+void LinkedList::reverse()
+{
+	Node* p = this->head;
+	Node* q = nullptr;
+	Node* r = nullptr;
+	this->tail = head;
+	while (p != nullptr)
+	{
+		r = q;
+		q = p;
+		p = p->getNext();
+		q->setNext(r);
+	}
+	this->head = q;
+}
+
+Node* LinkedList::searchLinear(int key)
 {//with Move to Head improvement
+	Node* p = this->head;
 	Node* q = nullptr;
 	while (p)
 	{
@@ -188,85 +209,32 @@ Node* searchLinear(Node * p, int key)
 	return nullptr;
 }
 
-Node* searchLinearRecursion(Node* p, int key)
-{
-	if(p == nullptr) return nullptr;
-	if (p->getValue() == key) return p;
-	return searchLinearRecursion(p->getNext(), key);
-}
-
-
-void insertSortLinkedList(int x)
+void LinkedList::insertSorted(int x)
 {
 	Node* iNode = new Node(x);
-	Node* p = head;
-	if (head == nullptr)
+	Node* p = this->head;
+	if (this->head == nullptr)
 	{
-		head = iNode;
+		this->head = iNode;
 		return;
 	}
-	if (x < head->getValue())
+	if (x < this->head->getValue())
 	{
-		iNode->setNext(head);
-		head = iNode;
+		iNode->setNext(this->head);
+		this->head = iNode;
 		return;
 	}
 	while (p->getNext() && (p->getNext())->getValue() < x)
 		p = p->getNext();
 	iNode->setNext(p->getNext());
 	p->setNext(iNode);
+	//Add function for tail pointer
 }
 
-int deleteAt(int dIdx)
-{
-	Node* p, * q;
-	int retVal = -1, idx = 0;
-
-	if (dIdx == 1)
-	{
-		retVal = head->getValue();
-		p = head;
-		head = head->getNext();
-		delete p;
-	}
-	else
-	{
-		p = head;
-		q = nullptr;
-		for (idx = 0; idx < dIdx - 1 && p; idx++)
-		{
-			q = p;
-			p = p->getNext();
-		}
-		if (p)
-		{
-			q->setNext(p->getNext());
-			retVal = p->getValue();
-			delete p;
-		}
-	}
-	return retVal;
-}
-
-
-bool isSorted()
-{
-	Node* p = head;
-	int prevVal = INT_MIN;
-	while (p != nullptr)
-	{
-		if (p->getValue() < prevVal)
-			return false;
-		prevVal = p->getValue();
-		p = p->getNext();
-	}
-	return true;
-}
-
-void removeDuplicateSorted()
+void LinkedList::removeDuplicateSorted()
 {
 	//check for empty LL and just 1 LL
-	Node* p = head;
+	Node* p = this->head;
 	
 	while (p->getNext() != nullptr)
 	{
@@ -284,35 +252,75 @@ void removeDuplicateSorted()
 	}
 }
 
-void reverseSlidingNode()
+Node* LinkedList::reverseRecursion(Node* node)
 {
-	Node* p = head;
-	Node* q = nullptr;
-	Node* r = nullptr;
-	tail = head;
-	while (p != nullptr)
+	if (node == nullptr || node->getNext() == nullptr)
 	{
-		r = q;
-		q = p;
-		p = p->getNext();
-		q->setNext(r);
+		this->tail = node;
+		return node;
 	}
-	head = q;
+	Node* p = reverseRecursion(node->getNext());
+	node->getNext()->setNext(node);
+	node->setNext(nullptr);
+	return p;
 }
 
-void reverseSlidingNodeRecursive(Node* p, Node* q)
+void  LinkedList::concat(LinkedList * n2)
 {
-	if (q)
+	if (this->isLoop())
+		return;
+
+	Node* p = this->head;
+	while(p->getNext() !=nullptr)
+		p = p->getNext();
+	p->setNext(n2->getHead());
+	
+	while(p)
+		p = p->getNext();
+	this->tail = p;
+}
+
+void LinkedList::mergeSorted(LinkedList * n2)
+{
+	Node* outhead, * outtail;
+	Node* p = this->head;
+	Node* q = n2->getHead();
+
+	if (p->getValue() < q->getValue())
 	{
-		reverseSlidingNodeRecursive(q, q->getNext());
-		q->setNext(p);
+		outhead = outtail = p;
+		p = p->getNext();
+		outtail->setNext(nullptr);
 	}
 	else
-		head = p;
-}
+	{
+		outhead = outtail = q;
+		q = q->getNext();
+		outtail->setNext(nullptr);
+	}
 
-void concatLinkedLists()
-{
+	while (p && q)
+	{
+		if (p->getValue() < q->getValue())
+		{
+			outtail->setNext(p);
+			outtail = p;
+			p = p->getNext();
+			outtail->setNext(nullptr);
+		}
+		else
+		{
+			outtail->setNext(q);
+			outtail = q;
+			q = q->getNext();
+			outtail->setNext(nullptr);
+		}
+	}
+	if (p) outtail->setNext(p);
+	if (q) outtail->setNext(q);
+
+	this->head = outhead;
+	this->tail = outtail;
 
 }
 
@@ -332,6 +340,119 @@ Node* mergeSortedLinkedList(Node* nodeA, Node* nodeB)
 		nodeB->setNext(mergeSortedLinkedList(nodeA, nodeB->getNext()));
 		return nodeB;
 	}
+}
+
+void linkedListtest()
+{
+	
+	int A[] = { 3,4,7, 10,15 };
+	LinkedList* n1 = new LinkedList(&A[0], 5);
+	n1->display();
+	std::cout <<"\nLength: " << n1->length() << std::endl;
+	std::cout <<"\nSum: " << n1->sum() << std::endl;
+	std::cout <<"\nMax: " << n1->max() << std::endl;
+	std::cout <<"\nMin: " << n1->min() << std::endl;
+	
+	Node* temp = nullptr;
+	temp = n1->searchLinear(77);
+	if (temp != nullptr)
+		std::cout << "\nKey found: " << temp->getValue() << std::endl;
+	else
+		std::cout << "key not found" << std::endl;
+
+	n1->insertAt(55, 4);
+	n1->display();
+	std::cout << "Deleted element: " << n1->deleteAt(4) << std::endl;
+	n1->display();
+	n1->insertSorted(16);
+	n1->insertSorted(19);
+	std::cout << std::boolalpha << n1->isSorted() << std::noboolalpha << std::endl;
+
+	n1->removeDuplicateSorted();
+	n1->display();
+	//n1->reverse();
+	//n1->display();
+
+	////Creating a LOOP in the node
+	//Node* t1, * t2;
+	//t1 = n1->getHead()->getNext()->getNext();
+	//t2 = n1->getHead()->getNext();
+	//while (t2->getNext()!=nullptr)
+	//	t2 = t2->getNext();
+
+	//t2->setNext(t1);
+	std::cout << std::boolalpha << "IsLoop: " << n1->isLoop() << std::noboolalpha << std::endl;
+
+	int B[] = { 51,54,57, 60,65 };
+	LinkedList* n2 = new LinkedList(&B[0], 5);
+	n2->display();
+	/*n1->concat(n2);
+	n1->display();*/
+	n1->mergeSorted(n2);
+	n1->display();
+
+}
+
+
+/// <summary>
+/// Recursive version of the implemented function above
+/// </summary>
+/// <param name="node"></param>
+/*void printLinkedListRecursive(Node* node)
+{
+	//reverseSlidingNodeRecursive(nullptr, head);
+	if (node != NULL)
+	{
+		std::cout << node->getValue() << "->";
+		printLinkedListRecursive(node->getNext());
+	}
+}
+int countRecursive(Node* node)//O(n) Time, O(n) space (call stack)
+{
+	int x = 0;
+	if (node)
+	{
+		x = count(node->getNext());
+		return x + 1;
+	}
+	else
+		return x;
+}
+int addLinkedListRecursion(Node* node)
+{
+	int sum = 0;
+	if (node)
+	{
+		sum = addLinkedListRecursion(node->getNext());
+		return  sum + node->getValue();
+	}
+	else
+		return sum;
+}
+int MaximumElementLinkedlistRecursive(Node* p)
+{
+	int x = 0;
+	if (p == nullptr)
+		return INT_MIN;
+	x = MaximumElementLinkedlistRecursive(p->getNext());
+	return (x > p->getValue()) ? x : p->getValue();
+}
+void reverseSlidingNodeRecursive(Node* p, Node* q)
+{
+	if (q)
+	{
+		reverseSlidingNodeRecursive(q, q->getNext());
+		q->setNext(p);
+	}
+	else
+		head = p;
+}
+
+Node* searchLinearRecursion(Node* p, int key)
+{
+	if(p == nullptr) return nullptr;
+	if (p->getValue() == key) return p;
+	return searchLinearRecursion(p->getNext(), key);
 }
 
 void linkedListtest()
@@ -367,68 +488,4 @@ void linkedListtest()
 
 }
 
-void linkedListtest2()
-{
-	
-	int A[] = { 3,4,7, 10,15 };
-	Node * n1 = createLinkedList(&A[0], 5);
-	printLinkedList(n1);
-	std::cout << std::endl;
-	printLinkedListRecursive(n1);
-	std::cout <<"\n" << count(n1) << std::endl;
-	std::cout <<"\n" << countRecursive(n1) << std::endl;
-	std::cout <<"\n" << addLinkedList(n1) << std::endl;
-	std::cout <<"\n" << addLinkedListRecursion(n1) << std::endl;
-	std::cout <<"\n" << MaximumElementLinkedlist(n1) << std::endl;
-	std::cout << "\n" << MaximumElementLinkedlistRecursive(n1) << std::endl;
-
-	/*Node* temp = nullptr;
-	temp = searchLinear(n1, 7);
-	temp = searchLinear(n1, 15);
-	if (temp != nullptr)
-		std::cout << "\nKey found: " << temp->getValue() << std::endl;
-	else
-		std::cout << "key not found" << std::endl;*/
-
-	printLinkedList(head);
-
-	//insertAt(55, 2);
-	//printLinkedList(head);
-	InsertLast(54);
-	printLinkedList(head);
-	insertSortLinkedList(16);
-	
-	printLinkedList(head);
-	std::cout << "Deleted element: " << deleteAt(4) << std::endl;
-	insertSortLinkedList(54);
-	insertSortLinkedList(5);
-	insertSortLinkedList(5);
-	insertSortLinkedList(5);
-	printLinkedList(head);
-
-	std::cout <<std::boolalpha <<isSorted() << std::endl;
-	std::cout << std::noboolalpha;
-
-	removeDuplicateSorted();
-	printLinkedList(head);
-	reverseSlidingNode();
-	printLinkedList(head);
-	reverseSlidingNodeRecursive(nullptr, head);
-	printLinkedList(head);
-
-	////Creating a LOOP in the node
-	//Node* t1, * t2;
-	//t1 = head->getNext()->getNext();
-	//t2 = head->getNext();
-	//while (t2->getNext()!=nullptr)
-	//	t2 = t2->getNext();
-
-	//t2->setNext(t1);
-	std::cout << std::boolalpha << "IsLoop: " << isLoop() << std::endl;
-	std::cout << std::noboolalpha;
-	
-
-
-
-
-}
+*/
