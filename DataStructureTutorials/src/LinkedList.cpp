@@ -489,3 +489,74 @@ void linkedListtest()
 }
 
 */
+
+
+#pragma region CircularLinkedList
+CircularLinkedList::CircularLinkedList(int * A, int n)
+{
+	this->head = new Node(A[0]);
+	this->head->setNext(head);//head pointing to itself
+	this->tail = this->head;
+
+	for (int i = 1; i < n; i++)
+	{
+		Node* t = new Node(A[i]);
+		t->setNext(this->tail->getNext());//tail pointing to head always
+		this->tail->setNext(t);
+		this->tail = t;
+	}
+
+}
+
+int CircularLinkedList::length()//O(n) Time, O(1) space
+{
+	int ct = 0;
+	Node* p = this->head;
+	do
+	{
+		std::cout << p->getValue() << "->";
+		ct++;
+		p = p->getNext();
+	} while (p != this->head);
+	return ct;
+}
+
+
+void CircularLinkedList::display()
+{
+	Node* p = this->head;
+	do
+	{
+		std::cout << p->getValue() << "->";
+		p = p->getNext();
+	} while (p != this->head);
+	std::cout << std::endl;
+}
+
+
+void CircularLinkedList::insertAt(int index, int x)
+{
+
+}
+
+void CircularLinkedList::displayR(Node* p)
+{
+	static int flag = 0;
+	if (p != head || flag == 0)
+	{
+		flag = 1;
+		std::cout << p->getValue() << "->";
+		displayR(p->getNext());
+	}
+}
+
+void CircularlinkedListtest()
+{
+	int A[] = { 2, 3,4 ,5 ,6 };
+	CircularLinkedList cl(&A[0], 5);// creating in stack
+
+	cl.display();
+	cl.displayR(cl.getHead());
+}
+
+#pragma endregion

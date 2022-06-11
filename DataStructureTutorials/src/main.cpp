@@ -1,8 +1,16 @@
 #include "main.h"
 
+//Adapting the main for running test
+int main(int argc, char* argv[])
+{
+	testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}
 
+/*
 int main()
 {
+
 	//LinearRecursionTest();
 	//TreeRecursionTest();
 	//IndirectRecursionTest();
@@ -39,7 +47,9 @@ int main()
 	//sparseMatrixTest();
 	//polyTest();
 
-	linkedListtest();
+	//linkedListtest();
+	CircularlinkedListtest();
 	//QuadTreeTest();
 	return 0;
 }
+*/

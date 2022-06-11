@@ -68,5 +68,35 @@ public:
 	void mergeSorted(LinkedList* n2);
 	Node * reverseRecursion(Node* node);
 };
+
+class CircularLinkedList
+{
+private:
+	Node* head; 
+	Node* tail;
+public:
+	CircularLinkedList()
+	{
+		this->head = nullptr;
+		this->tail = nullptr;
+	}
+
+	Node* getHead() { return this->head; }
+	Node* getTail() { return this->tail; }
+
+	CircularLinkedList(int* A, int n);
+	int length();
+	void display();
+	void insertAt(int index, int x);
+	void displayR(Node* p);
+
+};
+
+
 void linkedListtest();
+void CircularlinkedListtest();
+
+
+
+
 #endif // 

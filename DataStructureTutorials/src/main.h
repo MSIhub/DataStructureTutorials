@@ -10,3 +10,6 @@
 #include "SparseMatrix.h"
 #include "PolynomialRepresentation.h"
 #include "Quadtree.h"
+
+//Testing 
+#include "UnitTests.h"
