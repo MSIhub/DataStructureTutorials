@@ -52,7 +52,54 @@ TEST_P(CircularLinkedListTest1, isLinkedListValid)
 
 INSTANTIATE_TEST_SUITE_P(MyGroupTest, CircularLinkedListTest1,
 	testing::Values(
-		CircularLinkedList_state{2,6,5},
-		CircularLinkedList_state{5,8,6},
-		CircularLinkedList_state{6,2,5}
+		CircularLinkedList_state{2,6,5}
+	//	,CircularLinkedList_state{5,8,6},
+	//	CircularLinkedList_state{6,2,5}
 	));
+
+#pragma region Insert test
+// Setup test fixtures
+class cll_test_b : public ::testing::Test
+{
+private:
+	int* A = new int[] { 22, 43, 44, 55, 56 };
+public:
+	CircularLinkedList* circList;
+	cll_test_b()	{circList = new CircularLinkedList(&A[0], 5);}
+	virtual ~cll_test_b()	{delete circList;}
+};
+
+
+struct cll_insert_state 
+{
+	int index;
+	int x;
+
+	friend std::ostream& operator << (std::ostream& os, const cll_insert_state& obj)
+	{
+		os << "Index: " << obj.index << ",  x: " << obj.x;
+		return os;
+	}
+};
+
+class cll_test : public cll_test_b, public testing::WithParamInterface<cll_insert_state>
+{
+};
+
+TEST_P(cll_test, insertTest)
+{
+	auto as = GetParam();
+	circList->insertAt(as.index, as.x);
+	EXPECT_EQ(circList->seek(as.index), as.x);
+}
+
+INSTANTIATE_TEST_SUITE_P(cll_test_gp, cll_test, testing::Values(
+	cll_insert_state{0,66},
+	cll_insert_state{1,76},
+	cll_insert_state{2,86},
+	cll_insert_state{3,96},
+	cll_insert_state{4,106},
+	cll_insert_state{5,116}
+));
+
+#pragma endregion

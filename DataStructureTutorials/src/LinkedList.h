@@ -86,8 +86,10 @@ public:
 
 	CircularLinkedList(int* A, int n);
 	int length();
+	int seek(int index);
 	void display();
 	void insertAt(int index, int x);
+	int deleteAt(int index);
 	void displayR(Node* p);
 
 };

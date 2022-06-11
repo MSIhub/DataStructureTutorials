@@ -1,5 +1,7 @@
 #include "LinkedList.h"
 
+
+#pragma region singlyLinkedList
 LinkedList::LinkedList(int * A, int n)
 {
 	int i; 
@@ -490,6 +492,7 @@ void linkedListtest()
 
 */
 
+#pragma endregion
 
 #pragma region CircularLinkedList
 CircularLinkedList::CircularLinkedList(int * A, int n)
@@ -510,11 +513,14 @@ CircularLinkedList::CircularLinkedList(int * A, int n)
 
 int CircularLinkedList::length()//O(n) Time, O(1) space
 {
+	if (this->head == nullptr)
+		return 0;
+
 	int ct = 0;
 	Node* p = this->head;
+
 	do
 	{
-		std::cout << p->getValue() << "->";
 		ct++;
 		p = p->getNext();
 	} while (p != this->head);
@@ -524,6 +530,9 @@ int CircularLinkedList::length()//O(n) Time, O(1) space
 
 void CircularLinkedList::display()
 {
+	if (this->head == nullptr)
+		return;
+
 	Node* p = this->head;
 	do
 	{
@@ -533,10 +542,107 @@ void CircularLinkedList::display()
 	std::cout << std::endl;
 }
 
+int CircularLinkedList::seek(int index)
+{
+	if (this->head == nullptr)
+		return -1;
+
+	if (index == 0)
+		return this->head->getValue();
+
+	int idx = 0;
+	Node* p = this->head;
+	do
+	{
+		idx++;
+		p= p->getNext();
+	} while (p != this->head && idx < index);
+
+	return p->getValue();
+}
+
+
 
 void CircularLinkedList::insertAt(int index, int x)
 {
+	std::cout << "insert at " << index << ", value: " << x << std::endl;
 
+	if (index < 0 || index > this->length())
+		return;
+
+	Node* iNode = new Node(x);
+	Node* p = this->head;
+	if (index == 0)
+	{
+		if (this->head == nullptr)//HAndling case when the linked list is empty
+		{
+			this->head = iNode;
+			this->head->setNext(this->head);
+		}
+		else //Changing head to the insert node
+		{
+			while(p->getNext()!=this->head)
+				p = p->getNext();
+			
+			p->setNext(iNode);
+			iNode->setNext(this->head);
+			this->head = iNode;
+		}
+	}
+	else
+	{
+		int i = 1;
+		while (i < index)
+		{
+			p = p->getNext();
+			i++;
+
+		}
+
+		iNode->setNext(p->getNext());
+		p->setNext(iNode);
+	}
+
+}
+
+int CircularLinkedList::deleteAt(int index)
+{
+	if (index < 0 || index > this->length())
+		return -1;
+	
+	Node* p = this->head;
+	int x = 0;
+	if (index == 0)
+	{
+		while (p->getNext() != this->head)
+			p = p->getNext();
+
+		x = this->head->getValue();
+		if (this->head == p)
+		{
+			delete p;
+			this->head = nullptr;
+			this->tail = nullptr;
+		}
+		else
+		{
+			p->setNext(this->head->getNext());
+			delete this->head;
+			this->head = p->getNext();
+		}
+	}
+	else
+	{
+		for (int i = 1; i < index; i++)
+			p = p->getNext();
+		
+		Node* q = p->getNext();;
+		p->setNext(q->getNext());
+		x = q->getValue();
+		delete q;
+	}
+
+	return x;
 }
 
 void CircularLinkedList::displayR(Node* p)
@@ -552,11 +658,22 @@ void CircularLinkedList::displayR(Node* p)
 
 void CircularlinkedListtest()
 {
-	int A[] = { 2, 3,4 ,5 ,6 };
-	CircularLinkedList cl(&A[0], 5);// creating in stack
+	//int A[] = {};
+	CircularLinkedList *cl  = new CircularLinkedList();// creating in stack
+	//CircularLinkedList cl(&A[0], 5);// creating in stack
 
-	cl.display();
-	cl.displayR(cl.getHead());
+	cl->display();
+	std::cout << cl->length() << std::endl;
+	cl->insertAt(0, 66);
+	cl->insertAt(1, 76);
+	cl->insertAt(2, 86);
+	cl->insertAt(0, 96);
+	std::cout << cl->seek(1) << std::endl;
+	cl->display();
+	cl->deleteAt(1);
+	cl->deleteAt(2);
+	cl->deleteAt(0);
+	cl->display();
 }
 
 #pragma endregion
